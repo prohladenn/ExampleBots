@@ -1,32 +1,31 @@
 package org.telegram.examplebots;
 
-import org.telegram.abilitybots.api.bot.AbilityBot;
-import org.telegram.abilitybots.api.objects.Ability;
+import org.telegram.telegrambots.abilitybots.api.bot.AbilityBot;
+import org.telegram.telegrambots.abilitybots.api.objects.Ability;
+import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
 
-import static org.telegram.abilitybots.api.objects.Locality.ALL;
-import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
+import static org.telegram.telegrambots.abilitybots.api.objects.Locality.ALL;
+import static org.telegram.telegrambots.abilitybots.api.objects.Privacy.PUBLIC;
 
 public class HelloBot extends AbilityBot {
-  public static final String BOT_TOKEN = "HELLOBOT_TOKEN";
-  public static final String BOT_USERNAME = "HELLOBOT_USERNAME";
 
-  public HelloBot() {
-    super(BOT_TOKEN, BOT_USERNAME);
-  }
+    public HelloBot(String botToken, String botUsername) {
+        super(new OkHttpTelegramClient(botToken), botUsername);
+    }
 
-  @Override
-  public int creatorId() {
-    return 123456789;
-  }
+    @Override
+    public long creatorId() {
+        return 123456789;
+    }
 
-  public Ability sayHelloWorld() {
-    return Ability
-        .builder()
-        .name("hello")
-        .info("says hello world!")
-        .locality(ALL)
-        .privacy(PUBLIC)
-        .action(ctx -> silent.send("Hello world!", ctx.chatId()))
-        .build();
-  }
+    public Ability sayHelloWorld() {
+        return Ability
+                .builder()
+                .name("hello")
+                .info("says hello world!")
+                .locality(ALL)
+                .privacy(PUBLIC)
+                .action(ctx -> silent.send("Hello world!", ctx.chatId()))
+                .build();
+    }
 }
